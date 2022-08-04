@@ -1,0 +1,41 @@
+
+.global-message
+{
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    min-width: 500px;
+    border-radius: 50px;
+    color: #fff;
+    z-index: 2;
+}
+
+.global-message.info
+{
+    background: #4586ff;
+}
+
+.global-message.error
+{
+    background: #d81d1d;
+}
+
+.subscribe-error
+{
+    background: #931d1d;
+    border-color: #931d1d;
+}
+
+.subscribe-success
+{
+    background: #15c8ce;
+    border-color: #15c8ce;
+}
+
+/* Categories Page Style */
+
+
+.categories-col .block-21 .text
+{
+    width: 100%;
+}
