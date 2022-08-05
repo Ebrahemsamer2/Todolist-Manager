@@ -12,9 +12,16 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-use App\Models\Task;
 
-Route::get('/', function(){
+Route::middleware('auth')->group(function(){
+
+    Route::get('/', function(){
+        return view('todolist.index');
+    })->name('home');
+
+    Route::get('/list/hey', function(){
+        return view('todolist.show');
+    })->name('list');
     
 });
 

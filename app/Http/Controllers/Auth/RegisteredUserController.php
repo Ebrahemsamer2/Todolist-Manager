@@ -35,17 +35,6 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request)
     {
-
-        $role = Role::where('name', 'user')->first();
-        if($role == null)
-        {
-            $role = Role::create(['name' => 'user']);
-            $role_id = $role->id;
-        }
-        else 
-        {
-            $role_id = $role->id;
-        }
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -55,14 +44,13 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role_id' => $role_id
+            'password' => Hash::make($request->password)
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
-
-        return redirect(RouteServiceProvider::HOME);
+        $token = $user->tokens()->create(['name' => 'token', 'token' => \Str::random(64)]);
+        return redirect(RouteServiceProvider::HOME)->with(['token', $token->plainTextToken]);
     }
 }
