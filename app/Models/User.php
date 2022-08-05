@@ -25,4 +25,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // Relations
+    public function todolists()
+    {
+        return $this->hasMany(Todolist::class);
+    }
 }

@@ -13,12 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-// Front User Routes
-
 Route::get('/', function(){
-    return "Hello";
+    
 });
 
 require __DIR__.'/auth.php';
