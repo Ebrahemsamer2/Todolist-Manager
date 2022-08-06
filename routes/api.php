@@ -16,9 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\API\TodolistController;
 
+// protected api routes
 Route::group(['middleware' => ['auth:sanctum']], function(){
 
+    // get routes
     Route::get('/', [TodolistController::class, 'index'])->name('todolists.index');
     Route::get('/todolists/{id}', [TodolistController::class, 'show'])->name('todolists.show');
 
+    // post routes
+    Route::post('/todolists', [TodolistController::class, 'store'])->name('todolists.store');
+    
 });

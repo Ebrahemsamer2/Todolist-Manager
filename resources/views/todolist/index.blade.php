@@ -4,7 +4,7 @@
 <div id='todolists'>
 
   <div class="d-flex justify-content-center loader">
-    <div style="width:8rem;height:8rem;" class="spinner-grow text-dark" role="status">
+    <div style="width:8rem;height:8rem;" class="spinner-border m-5 text-dark" role="status">
       <span class="visually-hidden">Loading...</span>
     </div>
   </div>
@@ -26,9 +26,10 @@
             response.todolists.forEach((todolist, index) => {
               let todolist_route = "{{ route('list', ':id') }}";
               todolist_route = todolist_route.replace(':id', todolist.id);
+
               html += `
                 <div class='col-md-4'>
-                  <div class='todolist'>
+                  <div class='todolist mb-4'>
                     <div class="card">
                       <div class="card-body todolist-info">
                         <h5 class="card-title">${todolist.title}</h5>
@@ -37,7 +38,15 @@
                       <div class="card-body">
                         <a 
                         href="${todolist_route}" 
-                        class="card-link btn btn-outline-danger">View TODO List</a>
+                        class="card-link btn btn-outline-secondary btn-sm">View</a>
+
+                        <a 
+                        href="#" 
+                        class="card-link btn btn-outline-primary btn-sm">Edit</a>
+
+                        <a 
+                        href="#" 
+                        class="card-link btn btn-outline-danger btn-sm">Delete</a>
                       </div>
                     </div>
                   </div>

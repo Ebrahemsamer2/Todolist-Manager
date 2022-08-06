@@ -15,6 +15,15 @@ class Todolist extends Model
         return self::all();
     }
 
+    public static function add($request)
+    {
+        return self::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'user_id' => $request->user()->id,
+        ]);
+    }
+
     // Relations
     public function user()
     {

@@ -10,63 +10,102 @@
 
         <title>TODO MANAGER</title>
     </head>
-  <body>
+    <body>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container">
-            <a class="navbar-brand" href="{{ route('home') }}">
-                <strong class='text-white h4'>TODO</strong> MANAGER</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#userDropdown" aria-controls="userDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container">
+                <a class="navbar-brand" href="{{ route('home') }}">
+                    <strong class='text-white h4'>TODO</strong> MANAGER</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#userDropdown" aria-controls="userDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <div class="collapse navbar-collapse" id="userDropdown">
-            <ul class="navbar-nav">
-                <li class="nav-item mx-2">
-                    <a class="nav-link {{ \Route::currentRouteName() == 'home' ? 'active' : ''; }}" aria-current="page" href="{{ route('home') }}">Home</a>
-                </li>
-                <li class="nav-item mx-2">
-                    <a 
-                    class="nav-link btn btn-danger btn-sm text-white" 
-                    href="#" 
-                    data-bs-toggle="modal" 
-                    data-bs-target="#newtodolistmodal"><strong style='letter-spacing:1.5px;'>New TODO List</strong></a>
-                </li>
+                <div class="collapse navbar-collapse" id="userDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item mx-2">
+                        <a class="nav-link {{ \Route::currentRouteName() == 'home' ? 'active' : ''; }}" aria-current="page" href="{{ route('home') }}">Home</a>
+                    </li>
+                    <li class="nav-item mx-2">
+                        <a 
+                        class="nav-link btn btn-danger btn-sm text-white" 
+                        href="#" 
+                        data-bs-toggle="modal" 
+                        data-bs-target="#newtodolistmodal"><strong style='letter-spacing:1.5px;'>New TODO List</strong></a>
+                    </li>
 
-                <li class="nav-item dropdown mx-2">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        {{ auth()->user()->name }}
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                        <li><a 
-                        onclick="event.preventDefault();document.querySelector('#logout-form').submit();"
-                        class="dropdown-item" 
-                        href="#">LOGOUT</a></li>
-                        <form id='logout-form' method='POST' action="{{ route('logout') }}">@csrf</form>
-                    </ul>
-                </li>
-            </ul>
+                    <li class="nav-item dropdown mx-2">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ auth()->user()->name }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a 
+                            onclick="event.preventDefault();document.querySelector('#logout-form').submit();"
+                            class="dropdown-item" 
+                            href="#">LOGOUT</a></li>
+                            <form id='logout-form' method='POST' action="{{ route('logout') }}">@csrf</form>
+                        </ul>
+                    </li>
+                </ul>
+                </div>
             </div>
+        </nav>
+        
+        <div class='container my-5'>
+
+            @yield('content')
+
         </div>
-    </nav>
-    
-    <div class='container my-5'>
 
-        @yield('content')
+        <script src="{{ asset('js/bundle.min.js') }}"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/classes/ajax.js') }}"></script>
+        
+        @yield('scripts')
 
-    </div>
+        <script>
+            $(document).on("click", ".create-todolist-btn", (e) => {
+                e.preventDefault();
+                let title = $("#newtodolistmodal input[name='title']").val();
+                let description = $("#newtodolistmodal textarea[name='description']").val();
+                let token = $("meta[name='csrf-token']").attr('content');
+                
+                let formData = new FormData();
+                formData.append('title', title);
+                formData.append('description', description);
+                formData.append('_token', token);
+                
+                Ajax.send('POST', "{{ route('todolists.store') }}", formData, (response) => {
+                    let todolist = response.todolist;
+                    let todolist_route = "{{ route('list', ':id') }}";
+                    todolist_route = todolist_route.replace(':id', todolist.id);
+                    let html = `
+                        <div class='col-md-4'>
+                            <div class='todolist mb-4'>
+                                <div class="card">
+                                <div class="card-body todolist-info">
+                                    <h5 class="card-title">${todolist.title}</h5>
+                                    <p class="card-text">${todolist.description}</p>
+                                </div>
+                                <div class="card-body">
+                                    <a 
+                                    href="${todolist_route}" 
+                                    class="card-link btn btn-outline-danger">View TODO List</a>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    $("#todolists .row").append(html);
 
-    <script src="{{ asset('js/bundle.min.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-    <script src="{{ asset('js/classes/ajax.js') }}"></script>
-    
-    @yield('scripts')
-    
-    <!-- Option 2: Separate Popper and Bootstrap JS -->
-    <!--
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
-    -->
+                    // clear modal data and hide it.
+                    $("#newtodolistmodal input, #newtodolistmodal textarea").val('');
+                    $("#newtodolistmodal").hide();
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+
+                });
+            })
+        </script>
 
         <!-- Modal -->
         <div class="modal fade" id="newtodolistmodal" tabindex="-1" aria-labelledby="newtodolistmodalLabel" aria-hidden="true">
@@ -80,17 +119,17 @@
                     <form>
                     <div class="mb-3">
                         <label for="title" class="col-form-label">Title:</label>
-                        <input placeholder="ex: Learning Data Structure" type="text" class="form-control" id="title">
+                        <input name='title' placeholder="ex: Learning Data Structure" type="text" class="form-control" id="title">
                     </div>
                     <div class="mb-3">
                         <label for="description" class="col-form-label">Description:</label>
-                        <textarea placeholder="ex: Leating Beginner Data Structure topics list stack, queues and LinkedList..." class="form-control" id="description"></textarea>
+                        <textarea name='description' placeholder="ex: Leating Beginner Data Structure topics list stack, queues and LinkedList..." class="form-control" id="description"></textarea>
                     </div>
                     </form>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-danger btn-sm">Create Todo List</button>
+                    <button type="button" class="btn btn-danger btn-sm create-todolist-btn">Create Todo List</button>
                 </div>
                 </div>
             </div>
