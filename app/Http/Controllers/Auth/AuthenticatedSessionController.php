@@ -31,6 +31,7 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
         $request->session()->regenerate();
 
+        // create token for logged in user
         $token = $request->user()->createToken('token');
 
         return redirect()
@@ -46,8 +47,10 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
+        // delete user tokens
+        $request->user()->tokens()->delete();
 
+        Auth::guard('web')->logout();
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();

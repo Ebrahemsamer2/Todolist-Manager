@@ -10,6 +10,11 @@ class Todolist extends Model
     use HasFactory;
     protected $fillable = ['title', 'description', 'user_id'];
 
+    public static function getAll()
+    {
+        return self::all();
+    }
+
     // Relations
     public function user()
     {

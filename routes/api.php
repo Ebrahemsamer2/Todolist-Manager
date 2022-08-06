@@ -14,8 +14,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Http\Controllers\API\TodolistController;
+
 Route::group(['middleware' => ['auth:sanctum']], function(){
-    Route::get('/user', function(){
-        dd( request()->user() );
-    });
+
+    Route::get('/', [TodolistController::class, 'index'])->name('todolists.index');
+    Route::get('/todolists/{id}', [TodolistController::class, 'show'])->name('todolists.show');
+
 });

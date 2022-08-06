@@ -19,7 +19,7 @@ Route::middleware('auth')->group(function(){
         return view('todolist.index');
     })->name('home');
 
-    Route::get('/list/hey', function(){
+    Route::get('/list/{id}', function(){
         return view('todolist.show');
     })->name('list');
     
