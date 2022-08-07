@@ -11,7 +11,7 @@
         <title>TODO MANAGER</title>
     </head>
     <body>
-
+        <div id='global-message'></div>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
                 <a class="navbar-brand" href="{{ route('home') }}">

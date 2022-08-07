@@ -39,7 +39,7 @@
                 <tr>
                     <th scope="row">{{ ++$key }}</th>
                     <td>{{ $token->name }}</td>
-                    <td>{{$token->last_used_at ? $token->last_used_at->diffForHumans() : ''}}</td>
+                    <td>{{$token->last_used_at ? $token->last_used_at->diffForHumans() : '__' }}</td>
                     <td>
                         <a 
                         onclick="event.preventDefault();document.querySelector('#delete-token-form').submit();"

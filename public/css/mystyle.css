@@ -1,13 +1,22 @@
 
-.global-message
+#global-message
 {
     position: fixed;
-    bottom: 10px;
-    right: 10px;
-    min-width: 500px;
+    min-width: 400px;
+    bottom: 0;
+    right: 2%;
     border-radius: 50px;
-    color: #fff;
-    z-index: 2;
+    letter-spacing: 1px;
+    font-size: 1.2rem;
+    color: white;
+}
+#global-message.success {
+    background: #21b15b;
+    border-color: #21b15b;
+}
+#global-message.error {
+    background: #ad2020;
+    border-color: #ad2020;
 }
 
 .navbar .navbar-brand strong {

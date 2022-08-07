@@ -35,6 +35,8 @@ class Todolist {
                 $("#newtodolistmodal").removeClass("show");
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
+                
+                Ajax.showMessage('Todolist has been updated.', 1);
             }
         }); 
     }
@@ -88,6 +90,8 @@ class Todolist {
             $("#newtodolistmodal").removeClass("show");
             $('body').removeClass('modal-open');
             $('.modal-backdrop').remove();
+
+            Ajax.showMessage('Todolist has been created.', 1);
         });
     }
 
@@ -144,6 +148,7 @@ class Todolist {
             if( response.success )
             {
                 $("#todolist-"+id).parent().remove();
+                Ajax.showMessage('Todolist has been deleted.', 1);
             }
         });
     }

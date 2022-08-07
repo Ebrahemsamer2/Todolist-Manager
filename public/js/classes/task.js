@@ -50,7 +50,7 @@ class Task {
                 `;
               });
             }
-            $("#todolist").append(html);
+            $("#todolist").append(html);            
         });
     }
 
@@ -65,6 +65,8 @@ class Task {
             if( response.success )
             {
                 $("#task-"+id).remove();
+
+                Ajax.showMessage('Task has been deleted.', 1);
             }
         });
     }
@@ -93,6 +95,8 @@ class Task {
                 $("#task-" + id).find(".task-title").removeClass('d-none')
                 $("#task-" + id).find("input[name='task-title']").addClass('d-none')
                 $("#task-" + id).find("input[name='task-title']").attr('disabled', true)
+
+                Ajax.showMessage('Task has been updated.', 1);
             }
         });
     }
@@ -107,44 +111,47 @@ class Task {
         formData.append('_token', token); 
 
         Ajax.send('POST', `/api/list/${todolist_id}/tasks`, formData, (response) => {
+            
             if( response.task )
             {
-            let html = `
-                <ul id='task-${response.task.id}' class="list-group list-group-horizontal rounded-0 tasks">
-                <li
-                    class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-                    <h4 class="lead fw-normal mb-0 d-block task-title">${response.task.title}</h4>
-                    <input 
-                    onfocus="let value = this.value; this.value = null; this.value=value"
-                    onfocusout="Task.update('${todolist_id}', '${response.task.id}')"
-                    type='text' 
-                    name='task-title'
-                    class='form-control d-none' 
-                    value='${response.task.title}' 
-                    disabled>
-                </li>
-                
-                <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
+                let html = `
+                    <ul id='task-${response.task.id}' class="list-group list-group-horizontal rounded-0 tasks">
+                    <li
+                        class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
+                        <h4 class="lead fw-normal mb-0 d-block task-title">${response.task.title}</h4>
+                        <input 
+                        onfocus="let value = this.value; this.value = null; this.value=value"
+                        onfocusout="Task.update('${todolist_id}', '${response.task.id}')"
+                        type='text' 
+                        name='task-title'
+                        class='form-control d-none' 
+                        value='${response.task.title}' 
+                        disabled>
+                    </li>
+                    
+                    <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
 
-                    <div class="text-end">
+                        <div class="text-end">
 
-                        <a 
-                        onclick="event.preventDefault(); Task.edit('${response.task.id}')"
-                        href="#" 
-                        class="btn btn-primary btn-sm">EDIT</a>
+                            <a 
+                            onclick="event.preventDefault(); Task.edit('${response.task.id}')"
+                            href="#" 
+                            class="btn btn-primary btn-sm">EDIT</a>
 
-                        <a 
-                        onclick="event.preventDefault();Task.remove('${todolist_id}', '${response.task.id}');"
-                        href="#" 
-                        class="btn btn-danger btn-sm">DELETE</a>
+                            <a 
+                            onclick="event.preventDefault();Task.remove('${todolist_id}', '${response.task.id}');"
+                            href="#" 
+                            class="btn btn-danger btn-sm">DELETE</a>
 
-                    </div>
-                </li>
-                </ul>
-            `;
-            $(".empty-tasks-notify").remove();
-            $("#todolist").append(html);
-            $("#new-task-input").val('');
+                        </div>
+                    </li>
+                    </ul>
+                `;
+                $(".empty-tasks-notify").remove();
+                $("#todolist").append(html);
+                $("#new-task-input").val('');
+
+                Ajax.showMessage('Task has been created.', 1);
             }
         });
     }

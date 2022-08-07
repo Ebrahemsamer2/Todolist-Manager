@@ -16,7 +16,7 @@
 @section('scripts')
 
 <script>
-    $(function() {
+    $(window).on('load', function() {
         Todolist.loadTodolists();
     });
 </script>
