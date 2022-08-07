@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+use App\Http\Controllers\UserController;
+
 Route::middleware('auth')->group(function(){
 
     Route::get('/', function(){
@@ -22,7 +24,10 @@ Route::middleware('auth')->group(function(){
     Route::get('/list/{id}', function(){
         return view('todolist.show');
     })->name('list');
-    
+
+    Route::get('/user/tokens', [UserController::class, 'getTokens'])->name('user.tokens');
+    Route::post('/user/tokens', [UserController::class, 'store'])->name('user.tokens.store');
+    Route::delete('/user/tokens/{token}', [UserController::class, 'delete'])->name('user.tokens.delete');
 });
 
 require __DIR__.'/auth.php';

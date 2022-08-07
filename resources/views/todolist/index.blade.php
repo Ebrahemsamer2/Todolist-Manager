@@ -19,38 +19,43 @@
     $(function() {
         Ajax.send('GET', "{{ route('todolists.index') }}", "", (response) => {
             $(".loader").remove();
-
             let html = `<div class='row'>`;
-            response.todolists.forEach((todolist, index) => {
-              let todolist_route = "{{ route('list', ':id') }}";
-              todolist_route = todolist_route.replace(':id', todolist.id);
+            if( response.todolists.length == 0 )
+            {
+              html += `<h4 class='text-center empty-list-notify'>There Are No Todolists For Now.</h4>`;
+            }
+            else {
+              response.todolists.forEach((todolist, index) => {
+                let todolist_route = "{{ route('list', ':id') }}";
+                todolist_route = todolist_route.replace(':id', todolist.id);
 
-              html += `
-                <div class='col-md-4'>
-                  <div id='todolist-${todolist.id}' class='todolist mb-4'>
-                    <div class="card">
-                      <div class="card-body todolist-info">
-                        <h5 class="card-title title">${todolist.title}</h5>
-                        <p class="card-text description">${todolist.description}</p>
-                      </div>
-                      <div class="card-body">
-                        <a 
-                        href="${todolist_route}" 
-                        class="card-link btn btn-outline-secondary btn-sm">View</a>
-                        <a 
-                        onclick="event.preventDefault();Todolist.edit('${todolist.id}');"
-                        href="#" 
-                        class="card-link btn btn-outline-primary btn-sm">Edit</a>
-                        <a 
-                        onclick="event.preventDefault();Todolist.remove('${todolist.id}');"
-                        href="#" 
-                        class="card-link btn btn-outline-danger btn-sm">Delete</a>
+                html += `
+                  <div class='col-md-4'>
+                    <div id='todolist-${todolist.id}' class='todolist mb-4'>
+                      <div class="card">
+                        <div class="card-body todolist-info">
+                          <h5 class="card-title title">${todolist.title}</h5>
+                          <p class="card-text description">${todolist.description}</p>
+                        </div>
+                        <div class="card-body">
+                          <a 
+                          href="${todolist_route}" 
+                          class="card-link btn btn-outline-secondary btn-sm">View</a>
+                          <a 
+                          onclick="event.preventDefault();Todolist.edit('${todolist.id}');"
+                          href="#" 
+                          class="card-link btn btn-outline-primary btn-sm">Edit</a>
+                          <a 
+                          onclick="event.preventDefault();Todolist.remove('${todolist.id}');"
+                          href="#" 
+                          class="card-link btn btn-outline-danger btn-sm">Delete</a>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                `;
-              });
+                  `;
+                });
+              }
               html += '</div>';
               $("#todolists").append(html);
         });

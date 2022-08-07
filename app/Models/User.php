@@ -27,6 +27,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public static function createNewToken( $request )
+    {
+        return $request->user()->createToken($request->token_name);
+    }
+
     // Relations
     public function todolists()
     {

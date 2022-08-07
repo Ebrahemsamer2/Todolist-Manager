@@ -38,6 +38,9 @@
                             {{ auth()->user()->name }}
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('user.tokens') }}">My Tokens</a>
+                            </li>
                             <li><a 
                             onclick="event.preventDefault();document.querySelector('#logout-form').submit();"
                             class="dropdown-item" 
@@ -113,6 +116,8 @@
                             </div>
                         </div>
                     `;
+                    $(".empty-list-notify").remove();
+                    
                     $("#todolists .row").append(html);
 
                     // clear modal data and hide it.
