@@ -10,9 +10,9 @@ class Todolist extends Model
     use HasFactory;
     protected $fillable = ['title', 'description', 'user_id'];
 
-    public static function getAll()
+    public static function getUserTodoLists()
     {
-        return self::all();
+        return self::where('user_id', auth()->id())->orderBy('id', 'DESC')->get();
     }
 
     public static function add($request)

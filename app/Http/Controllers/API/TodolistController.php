@@ -13,7 +13,7 @@ class TodolistController extends Controller
     public function index()
     {
         return response()->json([
-            'todolists' => Todolist::getAll()
+            'todolists' => Todolist::getUserTodoLists()
         ]);
     }
 
