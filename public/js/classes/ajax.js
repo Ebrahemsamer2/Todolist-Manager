@@ -11,6 +11,7 @@ class Ajax{
             contentType: false,
             success: success_call_back,
             error: (errors) => {
+                // get validation errors
                 let index = 0;
                 $.each( errors.responseJSON.errors, (key, error) => {
                     if( index == 0 )
@@ -18,6 +19,10 @@ class Ajax{
                         
                     index++;
                 });
+
+                // for other errors
+                if( index == 0 )
+                    this.showMessage( errors.responseJSON.message, 0);
             }
         });
     }

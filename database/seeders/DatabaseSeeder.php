@@ -11,6 +11,8 @@ class DatabaseSeeder extends Seeder
 {
     public function run()
     {
-        $users = \App\Models\User::factory(1)->create();
+        \App\Models\User::factory(1)->create();
+        \App\Models\Todolist::factory(1)->create();
+        \App\Models\Task::factory(1)->create();
     }
 }

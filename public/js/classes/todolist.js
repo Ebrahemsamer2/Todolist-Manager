@@ -82,7 +82,7 @@ class Todolist {
             `;
             $(".empty-list-notify").remove();
             
-            $("#todolists .row").append(html);
+            $("#todolists .row").prepend(html);
 
             // clear modal data and hide it.
             $("#newtodolistmodal input, #newtodolistmodal textarea").val('');

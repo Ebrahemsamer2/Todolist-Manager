@@ -27,11 +27,14 @@ class Todolist extends Model
     public static function modify($request, $id)
     {
         $todolist = self::where('id', $id)->first();
-        $todolist->update([
-            'title' => $request->title,
-            'description' => $request->description
-        ]);
-        return $todolist;
+        if( $todolist ) {
+            $todolist->update([
+                'title' => $request->title,
+                'description' => $request->description
+            ]);
+            return $todolist;
+        }
+        abort(404, 'Todolist does not exist');
     }
 
     public static function remove($id) {
@@ -39,7 +42,11 @@ class Todolist extends Model
     }
 
     public static function get($id) {
-        return self::with('tasks')->where( 'id', $id )->first();
+        $todolist = self::where( 'id', $id )->first();
+        if( $todolist )
+            return $todolist;
+
+        abort(404, 'Todolist does not exist');
     }
 
     // Relations

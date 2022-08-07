@@ -9,7 +9,9 @@
     letter-spacing: 1px;
     font-size: 1.2rem;
     color: white;
+    z-index: 999;
 }
+
 #global-message.success {
     background: #21b15b;
     border-color: #21b15b;
