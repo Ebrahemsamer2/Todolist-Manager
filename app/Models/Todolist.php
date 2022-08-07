@@ -39,7 +39,7 @@ class Todolist extends Model
     }
 
     public static function get($id) {
-        return self::where( 'id', $id )->first();
+        return self::with('tasks')->where( 'id', $id )->first();
     }
 
     // Relations

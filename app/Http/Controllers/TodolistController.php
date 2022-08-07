@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Todolist;
 
 class TodolistController extends Controller
 {
@@ -11,8 +12,10 @@ class TodolistController extends Controller
         return view('todolist.index');
     }
 
-    public function show()
+    public function show($id)
     {
-        return view('todolist.show');
+        return view('todolist.show', [
+            'id' => $id
+        ]);
     }
 }
