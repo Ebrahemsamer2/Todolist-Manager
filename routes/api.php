@@ -21,7 +21,7 @@ use App\Http\Controllers\API\TaskController;
 Route::group(['middleware' => ['auth:sanctum']], function(){
 
     // todolists get routes
-    Route::get('/', [TodolistController::class, 'index'])->name('todolists.index');
+    Route::get('/todolists', [TodolistController::class, 'index'])->name('todolists.index');
     Route::get('/todolists/{id}', [TodolistController::class, 'show'])->name('todolists.show');
 
     // todolists post routes

@@ -76,89 +76,15 @@
                 $("#newtodolistmodal .update-todolist-btn").removeClass('update-todolist-btn');
             });
 
-            // Create a new Todolist
-            $(document).on("click", ".create-todolist-btn", (e) => {
-                
-                let title = $("#newtodolistmodal input[name='title']").val();
-                let description = $("#newtodolistmodal textarea[name='description']").val();
-                let token = $("meta[name='csrf-token']").attr('content');
-                
-                let formData = new FormData();
-                formData.append('title', title);
-                formData.append('description', description);
-                formData.append('_token', token);
-                
-                Ajax.send('POST', "{{ route('todolists.store') }}", formData, (response) => {
-                    let todolist = response.todolist;
-                    let todolist_route = "{{ route('list', ':id') }}";
-                    todolist_route = todolist_route.replace(':id', todolist.id);
-                    let html = `
-                        <div class='col-md-4'>
-                            <div id='todolist-${todolist.id}' class='todolist mb-4'>
-                                <div class="card">
-                                    <div class="card-body todolist-info">
-                                        <h5 class="card-title title">${todolist.title}</h5>
-                                        <p class="card-text description">${todolist.description}</p>
-                                    </div>
-                                    <div class="card-body">
-                                        <a 
-                                        href="${todolist_route}" 
-                                        class="card-link btn btn-outline-secondary btn-sm">View</a>
-                                        <a 
-                                        onclick="event.preventDefault();Todolist.edit('${todolist.id}');"
-                                        href="#" 
-                                        class="card-link btn btn-outline-primary btn-sm">Edit</a>
-                                        <a 
-                                        onclick="event.preventDefault();Todolist.remove('${todolist.id}');"
-                                        href="#" 
-                                        class="card-link btn btn-outline-danger btn-sm">Delete</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    $(".empty-list-notify").remove();
-                    
-                    $("#todolists .row").append(html);
-
-                    // clear modal data and hide it.
-                    $("#newtodolistmodal input, #newtodolistmodal textarea").val('');
-                    $("#newtodolistmodal").hide();
-                    $("#newtodolistmodal").removeClass("show");
-                    $('body').removeClass('modal-open');
-                    $('.modal-backdrop').remove();
-                });
+            // remove backdrop in case user close modal in different ways.
+            $(document).on('hidden.bs.modal', "#newtodolistmodal", function (e) {
+                $('.modal-backdrop').remove();
             })
+
         </script>
 
         <!-- Modal -->
-        <div class="modal fade" id="newtodolistmodal" tabindex="-1" aria-labelledby="newtodolistmodalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">New Todo List</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form>
-                        <input name='id' type="hidden" id="id">
-                        <div class="mb-3">
-                            <label for="title" class="col-form-label">Title:</label>
-                            <input name='title' placeholder="ex: Learning Data Structure" type="text" class="form-control" id="title">
-                        </div>
-                        <div class="mb-3">
-                            <label for="description" class="col-form-label">Description:</label>
-                            <textarea name='description' placeholder="ex: Leating Beginner Data Structure topics list stack, queues and LinkedList..." class="form-control" id="description"></textarea>
-                        </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-danger btn-sm create-todolist-btn">Save Todo List</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('includes.todolistmodal')
 
     </body>
 </html>
