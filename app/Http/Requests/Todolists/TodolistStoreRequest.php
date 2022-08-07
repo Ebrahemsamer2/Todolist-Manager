@@ -25,8 +25,7 @@ class TodolistStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|string|min:5',
-            'description' => 'required|string|min:20',
-            // 'user_id' => 'number|exists:users,id'  will be the authenticated person so no need for it.
+            'description' => 'required|string|min:20'
         ];
     }
 }

@@ -25,5 +25,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
 
     // post routes
     Route::post('/todolists', [TodolistController::class, 'store'])->name('todolists.store');
-    
+    Route::post('/todolists/{id}', [TodolistController::class, 'destroy'])->name('todolists.destroy');
+    Route::PUT('/todolists/{id}', [TodolistController::class, 'update'])->name('todolists.update');
 });

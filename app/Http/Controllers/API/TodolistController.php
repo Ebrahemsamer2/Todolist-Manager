@@ -26,6 +26,22 @@ class TodolistController extends Controller
 
     public function show($id)
     {
-        
+        return response()->json([
+            'todolist' => Todolist::get( $id )
+        ]);
+    }
+
+    public function update(TodolistStoreRequest $request, $id)
+    {
+        return response()->json([
+            'todolist' => Todolist::modify($request, $id)
+        ]);
+    }
+
+    public function destroy($id)
+    {
+        return response()->json([
+            'success' => Todolist::remove( $id )
+        ]);
     }
 }

@@ -24,6 +24,24 @@ class Todolist extends Model
         ]);
     }
 
+    public static function modify($request, $id)
+    {
+        $todolist = self::where('id', $id)->first();
+        $todolist->update([
+            'title' => $request->title,
+            'description' => $request->description
+        ]);
+        return $todolist;
+    }
+
+    public static function remove($id) {
+        return self::destroy( $id );
+    }
+
+    public static function get($id) {
+        return self::where( 'id', $id )->first();
+    }
+
     // Relations
     public function user()
     {
