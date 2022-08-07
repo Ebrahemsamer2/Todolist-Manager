@@ -2,7 +2,7 @@
 
 ## Demo
 Here is fully working Demo: https://www.todolist.realprogrammer.net/ <br>
-You have to register first in order to generate access token and make API requests.<br>
+You have to register first in order to generate access tokens and make API requests.<br>
 
 ## Basic installation steps 
 Before you start the installation process you need to have **installed composer**
@@ -13,3 +13,7 @@ Before you start the installation process you need to have **installed composer*
 4. Copy `.env.example` into `.env` file
 5. Run `php artisan key:generate --ansi`
 6. Run `php artisan migrate:fresh --seed`
+
+## Demo Credentials
+username: `user@user.com`
+password: `password`
