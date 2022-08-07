@@ -11,9 +11,9 @@ Before you start the installation process you need to have **installed composer*
 2. Navigate to the project root directory using command line
 3. Run `composer install`
 4. Copy `.env.example` into `.env` file
-5. Run `php artisan key:generate --ansi`
+5. Run `php artisan key:generate`
 6. Run `php artisan migrate:fresh --seed`
 
 ## Demo Credentials
-username: `user@user.com`
+username: `user@user.com`<br>
 password: `password`
