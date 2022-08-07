@@ -14,7 +14,7 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-row align-items-center">
-                    <input type="text" class="form-control form-control-lg" id="new-task-input"
+                    <input required type="text" class="form-control form-control-lg" id="new-task-input"
                       placeholder="Add New Task">
                     <a href="#!" data-mdb-toggle="tooltip" title="Set due date"><i
                         class="fas fa-calendar-alt fa-lg me-3"></i></a>
@@ -54,10 +54,10 @@
       Ajax.send('GET', `{{ route('todolists.show', "${id}") }}` , "", (response) => {
         $(".loader").remove();
         $(".todolist-title").text( response.todolist.title );
-        let html = `<div class='row'>`;
+        let html = ``;
         if( !response.todolist || response.todolist.tasks.length == 0 )
         {
-          html += `<h4 class='text-center empty-list-notify'>There Are No Tasks In This Todolist.</h4>`;
+          html += `<h4 class='text-center empty-tasks-notify'>There Are No Tasks In This Todolist.</h4>`;
         }
         else {
           response.todolist.tasks.forEach((task, index) => {
@@ -77,6 +77,7 @@
                       class="btn btn-primary btn-sm">EDIT</a>
 
                       <a 
+                      onclick="event.preventDefault();Task.remove('${response.todolist.id}', '${task.id}');"
                       href="#" 
                       class="btn btn-danger btn-sm">DELETE</a>
 
@@ -86,11 +87,51 @@
             `;
           });
         }
-        html += '</div>';
         $("#todolist").append(html);
       });
 
-      
+      $(document).on("click", ".create-new-task", (e) => {
+        let title = $("#new-task-input").val();
+        let token = $("meta[name='csrf-token']").attr('content');
+
+        let formData = new FormData();
+        formData.append('todolist_id', id);
+        formData.append('title', title);
+        formData.append('_token', token); 
+
+        Ajax.send('POST', `/api/list/${id}/tasks`, formData, (response) => {
+          if( response.task )
+          {
+            let html = `
+              <ul id='task-${response.task.id}' class="list-group list-group-horizontal rounded-0 tasks">
+                <li
+                  class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
+                  <h4 class="lead fw-normal mb-0 d-block">${response.task.title}</h4>
+                </li>
+                
+                <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
+
+                  <div class="text-end">
+                    
+                      <a 
+                      href="#" 
+                      class="btn btn-primary btn-sm">EDIT</a>
+
+                      <a 
+                      onclick="event.preventDefault();Task.remove('${id}', '${response.task.id}');"
+                      href="#" 
+                      class="btn btn-danger btn-sm">DELETE</a>
+
+                  </div>
+                </li>
+              </ul>
+            `;
+            $(".empty-tasks-notify").remove();
+            $("#todolist").append(html);
+            $("#new-task-input").val('');
+          }
+        });
+      });
     });
 </script>
 @endsection

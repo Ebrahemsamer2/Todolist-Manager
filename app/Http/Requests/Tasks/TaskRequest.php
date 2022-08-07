@@ -25,7 +25,7 @@ class TaskRequest extends FormRequest
     {
         return [
             'title' => 'required|string',
-            'todolist_id' => 'required|number|exists:todolists,id'
+            'todolist_id' => 'required|integer|exists:todolists,id'
         ];
     }
 }

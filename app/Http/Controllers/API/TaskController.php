@@ -6,10 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Http\Requests\Tasks\TaskRequest;
 
+use App\Models\{Todolist, Task};
+
 class TaskController extends Controller
 {
-    public function store($id, TaskRequest $request) {
-        dd( $id );
-        
+    public function store(Todolist $todolist, TaskRequest $request) {
+        return response()->json(['task' => Task::add( $todolist, $request ) ]);
+    }
+
+    public function destroy(Todolist $todolist, $task) {
+        return response()->json([
+            'success' => Task::remove( $todolist, $task )
+        ]);
     }
 }

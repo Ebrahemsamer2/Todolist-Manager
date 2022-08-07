@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 use App\Http\Controllers\API\TodolistController;
+use App\Http\Controllers\API\TaskController;
 
 // protected api routes
 Route::group(['middleware' => ['auth:sanctum']], function(){
@@ -29,5 +30,6 @@ Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::PUT('/todolists/{id}', [TodolistController::class, 'update'])->name('todolists.update');
 
     // tasks post routes
-    Route::post('/list/{id}/tasks', [TaskController::class, 'store'])->name('tasks.store');
+    Route::post('/list/{todolist}/tasks', [TaskController::class, 'store'])->name('tasks.store');
+    Route::delete('/list/{todolist}/tasks/{task}', [TaskController::class, 'destroy'])->name('tasks.destroy');
 });
