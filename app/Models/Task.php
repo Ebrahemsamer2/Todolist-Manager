@@ -20,6 +20,13 @@ class Task extends Model
         return $todolist->tasks()->where('id', $task)->delete();
     }
 
+    public static function modify(Todolist $todolist, $task, $request)
+    {
+        return $todolist->tasks()->where('id', $task)->update([
+            'title' => $request->title 
+        ]);
+    }
+
     // relations
     public function todolist()
     {

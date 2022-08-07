@@ -19,21 +19,29 @@ class Task {
     }
 
     static edit(id) {
-        Ajax.send('GET', `/api/todolists/${id}`, "", (response) => {
-            if(response) {
-                // $("#newtodolistmodal").modal('show');
-                let myModal = new bootstrap.Modal(document.getElementById('newtodolistmodal'), {
-                    keyboard: false
-                })
-                
-                let modalToggle = document.getElementById('newtodolistmodal') // relatedTarget
-                myModal.show(modalToggle)
+        $("#task-"+id).find(".task-title").addClass('d-none')
+        $("#task-"+id).find(".task-title").next('input').prop('disabled', false);
+        $("#task-"+id).find(".task-title").next('input').removeClass('d-none');
+        $("#task-"+id).find(".task-title").next('input').focus();
+    }
 
-                $("#newtodolistmodal input[name='id']").val(response.todolist.id);
-                $("#newtodolistmodal input[name='title']").val(response.todolist.title);
-                $("#newtodolistmodal textarea[name='description']").val(response.todolist.description);
-                $("#newtodolistmodal button.create-todolist-btn").addClass('update-todolist-btn');
-                $("#newtodolistmodal button.create-todolist-btn").removeClass('create-todolist-btn');
+    static update(todolist_id, id) {
+        let title = $("#task-"+id).find("input[name='task-title']").val();
+        let token = $("meta[name='csrf-token']").attr('content');
+
+        let formData = new FormData();
+        formData.append('task', id);
+        formData.append('title', title);
+        formData.append('_token', token);
+        formData.append('_method', 'PUT');
+
+        Ajax.send('POST', `/api/list/${todolist_id}/tasks/${id}`, formData, (response) => {
+            if( response.success )
+            {
+                $("#task-" + id).find(".task-title").text(title)
+                $("#task-" + id).find(".task-title").removeClass('d-none')
+                $("#task-" + id).find("input[name='task-title']").addClass('d-none')
+                $("#task-" + id).find("input[name='task-title']").attr('disabled', true)
             }
         });
     }

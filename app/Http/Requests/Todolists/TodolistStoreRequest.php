@@ -25,7 +25,7 @@ class TodolistStoreRequest extends FormRequest
     {
         return [
             'title' => 'required|string|min:5',
-            'description' => 'required|string|min:20'
+            'description' => 'required|string|min:10'
         ];
     }
 }

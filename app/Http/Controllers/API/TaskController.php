@@ -14,6 +14,13 @@ class TaskController extends Controller
         return response()->json(['task' => Task::add( $todolist, $request ) ]);
     }
 
+    public function update(Todolist $todolist, $task, Request $request) {
+        
+        return response()->json([
+            'success' => Task::modify( $todolist, $task, $request)
+        ]);
+    }
+
     public function destroy(Todolist $todolist, $task) {
         return response()->json([
             'success' => Task::remove( $todolist, $task )

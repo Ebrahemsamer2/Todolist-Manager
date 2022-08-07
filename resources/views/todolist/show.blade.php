@@ -65,7 +65,15 @@
               <ul id='task-${task.id}' class="list-group list-group-horizontal rounded-0 tasks">
                 <li
                   class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-                  <h4 class="lead fw-normal mb-0 d-block">${task.title}</h4>
+                  <h4 class="lead fw-normal mb-0 d-block task-title">${task.title}</h4>
+                  <input 
+                    onfocus="let value = this.value; this.value = null; this.value=value"
+                    onfocusout="Task.update('${response.todolist.id}', '${task.id}')"
+                    type='text' 
+                    name='task-title'
+                    class='form-control d-none' 
+                    value='${task.title}' 
+                    disabled>
                 </li>
                 
                 <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
@@ -73,13 +81,14 @@
                   <div class="text-end">
                     
                       <a 
+                      onclick="event.preventDefault(); Task.edit('${task.id}')"
                       href="#" 
-                      class="btn btn-primary btn-sm">EDIT</a>
+                      class="btn btn-primary btn-sm edit-btn">EDIT</a>
 
                       <a 
                       onclick="event.preventDefault();Task.remove('${response.todolist.id}', '${task.id}');"
                       href="#" 
-                      class="btn btn-danger btn-sm">DELETE</a>
+                      class="btn btn-danger btn-sm delete-btn">DELETE</a>
 
                   </div>
                 </li>
@@ -106,7 +115,15 @@
               <ul id='task-${response.task.id}' class="list-group list-group-horizontal rounded-0 tasks">
                 <li
                   class="list-group-item px-3 py-1 d-flex align-items-center flex-grow-1 border-0 bg-transparent">
-                  <h4 class="lead fw-normal mb-0 d-block">${response.task.title}</h4>
+                  <h4 class="lead fw-normal mb-0 d-block task-title">${response.task.title}</h4>
+                  <input 
+                    onfocus="let value = this.value; this.value = null; this.value=value"
+                    onfocusout="Task.update('${id}', '${response.task.id}')"
+                    type='text' 
+                    name='task-title'
+                    class='form-control d-none' 
+                    value='${response.task.title}' 
+                    disabled>
                 </li>
                 
                 <li class="list-group-item ps-3 pe-0 py-1 rounded-0 border-0 bg-transparent">
@@ -114,6 +131,7 @@
                   <div class="text-end">
                     
                       <a 
+                      onclick="event.preventDefault(); Task.edit('${response.task.id}')"
                       href="#" 
                       class="btn btn-primary btn-sm">EDIT</a>
 
