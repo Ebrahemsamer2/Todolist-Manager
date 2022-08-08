@@ -6,7 +6,7 @@ You have to register first in order to generate access tokens and make API reque
 
 ### Find Your Token and Manage Them
 
-<p align="center"><a href="https://www.todolist.realprogrammer.net" target="_blank"><img src="http://todolist.realprogrammer.net/img/tokens.PNG" width="600"></a></p>
+<p align="center"><a href="http://todolist.realprogrammer.net" target="_blank"><img src="http://todolist.realprogrammer.net/img/tokens.PNG" width="1500"></a></p>
 
 ## Basic installation steps 
 Before you start the installation process you need to have **installed composer**
