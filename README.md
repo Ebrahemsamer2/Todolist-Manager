@@ -1,12 +1,12 @@
 ## Todolist Manager API
 
 ## Demo
-Here is fully working Demo: https://www.todolist.realprogrammer.net/ <br>
+Here is fully working Demo: http://todolist.realprogrammer.net/ <br>
 You have to register first in order to generate access tokens and make API requests.<br>
 
 ### Find Your Token and Manage Them
 
-<p align="center"><a href="https://www.todolist.realprogrammer.net" target="_blank"><img src="https://www.todolist.realprogrammer.net/img/token.PNG" width="600"></a></p>
+<p align="center"><a href="https://www.todolist.realprogrammer.net" target="_blank"><img src="http://todolist.realprogrammer.net/img/token.PNG" width="600"></a></p>
 
 ## Basic installation steps 
 Before you start the installation process you need to have **installed composer**
