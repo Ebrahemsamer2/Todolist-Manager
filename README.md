@@ -4,7 +4,11 @@
 Here is fully working Demo: http://todolist.realprogrammer.net/ <br>
 You have to register first in order to generate access tokens and make API requests.<br>
 
-### Find Your Token and Manage Them
+## Demo Credentials
+username: `user@user.com`<br>
+password: `password`
+
+#### Find Your Token and Manage Them
 
 <p align="center"><a href="http://todolist.realprogrammer.net" target="_blank"><img src="http://todolist.realprogrammer.net/img/tokens.PNG" width="1500"></a></p>
 
@@ -17,7 +21,3 @@ Before you start the installation process you need to have **installed composer*
 4. Copy `.env.example` into `.env` file
 5. Run `php artisan key:generate`
 6. Run `php artisan migrate:fresh --seed`
-
-## Demo Credentials
-username: `user@user.com`<br>
-password: `password`
